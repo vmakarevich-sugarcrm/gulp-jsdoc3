@@ -69,7 +69,8 @@ export function jsdoc(config, done) {
 
                 const spawn = require('child_process').spawn,
                     cmd = require.resolve('jsdoc/jsdoc.js'), // Needed to handle npm3 - find the binary anywhere
-                    inkdocstrap = path.dirname(require.resolve('ink-docstrap'));
+                    inkdocstrap = path.dirname(require.resolve('ink-docstrap')),
+                    templatePath = jsdocConfig.opts && jsdocConfig.opts.template || inkdocstrap;
                 
                 let args = ['-c', tmpobj.name];
                 
@@ -77,7 +78,7 @@ export function jsdoc(config, done) {
                 if(!jsdocConfig.templates || 
                     !jsdocConfig.templates.default || 
                     !jsdocConfig.templates.default.layoutFile){
-                    args = args.concat(['-t', inkdocstrap]);
+                    args = args.concat(['-t', templatePath]);
                 }    
 
                 args = args.concat(files);
